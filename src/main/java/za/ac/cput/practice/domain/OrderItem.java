@@ -10,36 +10,31 @@ public class OrderItem {
     private String orderItemId;
     private int quantity;
     private double subTotal;
-    @ManyToOne
-    private Product product;
 
-    @ManyToOne
-    private Order order;
 
 
     private OrderItem(Builder builder){
         this.orderItemId=builder.orderItemId;
         this.quantity=builder.quantity;
         this.subTotal=builder.subTotal;
-        this.product=builder.product;
+
+    }
+
+    public OrderItem() {
+
     }
 
     public String getOrderItemId() {
         return orderItemId;
     }
 
-    public int getquantity() {
+    public int getQuantity() {
         return quantity;
     }
 
     public double getSubTotal() {
-        //now that we are intoducing repositories we calculate
-        return product.getPrice() * quantity;
+      return subTotal;
 
-    }
-
-    public Product getProduct() {
-        return product;
     }
 
     public static class Builder{
@@ -47,25 +42,19 @@ public class OrderItem {
         private String orderItemId;
         private int quantity;
         private double subTotal;
-        private Product product;
 
         public Builder setOrderItemId(String orderItemId) {
             this.orderItemId = orderItemId;
             return this;
         }
 
-        public Builder setquantity(int quantity) {
+        public Builder setQuantity(int quantity) {
             this.quantity = quantity;
             return this;
         }
 
         public Builder setSubTotal(double subTotal) {
             this.subTotal = subTotal;
-            return this;
-        }
-
-        public Builder setProduct(Product product) {
-            this.product = product;
             return this;
         }
 

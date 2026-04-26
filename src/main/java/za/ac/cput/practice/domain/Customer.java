@@ -20,6 +20,10 @@ public class Customer {
         this.mobileNumber=builder.mobileNumber;
     }
 
+    public Customer() {
+
+    }
+
     public String getPatientId() {
         return patientId;
     }

@@ -13,6 +13,10 @@ public class InStoreOrder extends Order {
         this.cashierName=cashierName;
     }
 
+    public InStoreOrder() {
+
+    }
+
     public Double getImmediatePayment() {
         return immediatePayment;
     }
