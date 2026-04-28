@@ -1,6 +1,6 @@
 package za.ac.cput.practice.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,49 +13,44 @@ import java.util.List;
 @RequestMapping("/onlineorder")
 public class OnlineOrderController {
 
-    private final OnlineOrderService onlineOrderService;
+    private final OnlineOrder service;
 
-    @Autowired
-    public OnlineOrderController(OnlineOrderService onlineOrderService) {
-        this.onlineOrderService = onlineOrderService;
+
+    public OnlineOrderController(OnlineOrderService service) {
+        this.service=service;
     }
 
+    // CREATE
     @PostMapping("/create")
-    public ResponseEntity<OnlineOrder> create(@RequestBody OnlineOrder order) {
-        OnlineOrder created = onlineOrderService.create(order);
-        return new ResponseEntity<>(created, HttpStatus.CREATED);
+    public OnlineOrdercreate(@RequestBody OnlineOrder onlineorder) {
+
+        return service.create(onlineorder);
     }
 
-    @GetMapping("/read/{id}")
-    public ResponseEntity<OnlineOrder> read(@PathVariable String id) {
-        OnlineOrder order = onlineOrderService.read(id);
-        if (order == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(order, HttpStatus.OK);
+    // READ
+    @GetMapping("/{id}")
+    public OnlineOrder read(@PathVariable String id) {
+
+        return service.read(id);
+    }
+    @GetMapping
+    public List<onlineorder> getAll(){
+        return service.getAll();
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<OnlineOrder> update(@RequestBody OnlineOrder order) {
-        OnlineOrder updated = onlineOrderService.update(order);
-        if (updated == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(updated, HttpStatus.OK);
+
+    // UPDATE
+    @PutMapping
+    public OnlineOrder update(@RequestBody onlineorder onlineorder) {
+        return service.update(customer);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        boolean deleted = onlineOrderService.delete(id);
-        if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
 
-    @GetMapping("/getall")
-    public ResponseEntity<List<OnlineOrder>> getAll() {
-        List<OnlineOrder> orders = onlineOrderService.getAll();
-        return new ResponseEntity<>(orders, HttpStatus.OK);
+    // DELETE
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+        service.delete(id);
+
+
     }
 }

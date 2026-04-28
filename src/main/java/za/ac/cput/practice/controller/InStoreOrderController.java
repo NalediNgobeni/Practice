@@ -13,49 +13,44 @@ import java.util.List;
 @RequestMapping("/instoreorder")
 public class InStoreOrderController {
 
-    private final InStoreOrderService inStoreOrderService;
+    private final InStoreOrderService service;
 
-    @Autowired
-    public InStoreOrderController(InStoreOrderService inStoreOrderService) {
-        this.inStoreOrderService = inStoreOrderService;
+
+    public CustomerController(InStoreOrderService service) {
+        this.service=service;
     }
 
+    // CREATE
     @PostMapping("/create")
-    public ResponseEntity<InStoreOrder> create(@RequestBody InStoreOrder order) {
-        InStoreOrder created = inStoreOrderService.create(order);
-        return new ResponseEntity<>(created, HttpStatus.CREATED);
+    public InStoreOrder create(@RequestBody InStoreOrder instoreorder) {
+
+        return service.create(instoreorder);
     }
 
-    @GetMapping("/read/{id}")
-    public ResponseEntity<InStoreOrder> read(@PathVariable String id) {
-        InStoreOrder order = inStoreOrderService.read(id);
-        if (order == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(order, HttpStatus.OK);
+    // READ
+    @GetMapping("/{id}")
+    public InStoreOrder read(@PathVariable String id) {
+
+        return service.read(id);
+    }
+    @GetMapping
+    public List<InStoreOrder> getAll(){
+        return service.getAll();
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<InStoreOrder> update(@RequestBody InStoreOrder order) {
-        InStoreOrder updated = inStoreOrderService.update(order);
-        if (updated == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(updated, HttpStatus.OK);
+
+    // UPDATE
+    @PutMapping
+    public InStoreOrder update(@RequestBody InStoreOrder instoreorder) {
+        return service.update(customer);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        boolean deleted = inStoreOrderService.delete(id);
-        if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
 
-    @GetMapping("/getall")
-    public ResponseEntity<List<InStoreOrder>> getAll() {
-        List<InStoreOrder> orders = inStoreOrderService.getAll();
-        return new ResponseEntity<>(orders, HttpStatus.OK);
+    // DELETE
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+        service.delete(id);
+
+
     }
 }

@@ -15,52 +15,42 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-    @Autowired
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
+
+    public CustomerController(CustomerService service) {
+        this.service=service;
     }
 
     // CREATE
     @PostMapping("/create")
-    public ResponseEntity<Customer> create(@RequestBody Customer customer) {
-        Customer created = customerService.create(customer);
-        return new ResponseEntity<>(created, HttpStatus.CREATED);
+    public Customer create(@RequestBody Customer customer) {
+
+        return service.create(customer);
     }
 
     // READ
-    @GetMapping("/read/{id}")
-    public ResponseEntity<Customer> read(@PathVariable String id) {
-        Customer customer = customerService.read(id);
-        if (customer == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/{id}")
+    public Customer read(@PathVariable String id) {
+
+           return service.read(id);
         }
-        return new ResponseEntity<>(customer, HttpStatus.OK);
+    @GetMapping
+    public List<Customer> getAll(){
+        return service.getAll();
     }
+
 
     // UPDATE
-    @PutMapping("/update")
-    public ResponseEntity<Customer> update(@RequestBody Customer customer) {
-        Customer updated = customerService.update(customer);
-        if (updated == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(updated, HttpStatus.OK);
+    @PutMapping
+    public Customer update(@RequestBody Customer customer) {
+        return service.update(customer);
     }
+
 
     // DELETE
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        boolean deleted = customerService.delete(id);
-        if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+       service.delete(id);
 
-    // GET ALL
-    @GetMapping("/getall")
-    public ResponseEntity<List<Customer>> getAll() {
-        List<Customer> customers = customerService.getAll();
-        return new ResponseEntity<>(customers, HttpStatus.OK);
+
     }
 }
