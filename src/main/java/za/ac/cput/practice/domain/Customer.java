@@ -11,7 +11,10 @@ public class Customer {
     @Embedded
     private Name name;
     private String email;
+
     private String mobileNumber;
+
+
 
     private Customer(Builder builder){
         this.patientId=builder.patientId;

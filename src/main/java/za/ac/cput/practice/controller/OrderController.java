@@ -13,40 +13,40 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
 
-    private final CustomerService customerService;
+    private final OrderService service;
 
 
-    public CustomerController(CustomerService service) {
+    public OrderController(OrderService service) {
         this.service=service;
     }
 
     // CREATE
     @PostMapping("/create")
-    public Customer create(@RequestBody Customer customer) {
+    public Order create(@RequestBody Order order) {
 
-        return service.create(customer);
+        return service.create(order);
     }
 
-    // READ
+
     @GetMapping("/{id}")
-    public Customer read(@PathVariable String id) {
+    public Order read(@PathVariable String id) {
 
         return service.read(id);
     }
     @GetMapping
-    public List<Customer> getAll(){
+    public List<Order> getAll(){
         return service.getAll();
     }
 
 
-    // UPDATE
+
     @PutMapping
-    public Customer update(@RequestBody Customer customer) {
-        return service.update(customer);
+    public Order update(@RequestBody Order order) {
+        return service.update(order);
     }
 
 
-    // DELETE
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id) {
         service.delete(id);
